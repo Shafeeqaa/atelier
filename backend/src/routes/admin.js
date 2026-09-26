@@ -1,0 +1,14 @@
+import {Router} from 'express';
+import Product from '../models/Product.js';
+import {products as fallback} from '../data/products.js';
+import {admin} from '../middleware/admin.js';
+import mongoose from 'mongoose';
+const r=Router(); r.use(admin);
+const connected=()=>mongoose.connection.readyState===1;
+const clean=p=>({...p,id:p.id||`p-${Date.now()}`,sizes:p.sizes?.length?p.sizes:['S','M','L','XL'],colors:p.colors?.length?p.colors:['Black'],stock:Number(p.stock??0),price:Number(p.price||0),active:p.active!==false});
+r.get('/stats',async(_q,s,n)=>{try{const all=connected()?await Product.find().lean():fallback; s.json({products:all.length,active:all.filter(p=>p.active!==false).length,lowStock:all.filter(p=>(p.stock??0)<5).length})}catch(e){n(e)}});
+r.get('/products',async(_q,s,n)=>{try{s.json({products:connected()?await Product.find().sort({createdAt:-1}).lean():fallback})}catch(e){n(e)}});
+r.post('/products',async(q,s,n)=>{try{const p=clean(q.body); if(connected()){const created=await Product.create(p); return s.status(201).json({product:created})} fallback.push(p); s.status(201).json({product:p})}catch(e){n(e)}});
+r.put('/products/:id',async(q,s,n)=>{try{const p=clean({...q.body,id:q.params.id}); if(connected()){const updated=await Product.findOneAndUpdate({id:q.params.id},p,{new:true}); if(!updated)return s.status(404).json({message:'Product not found'}); return s.json({product:updated})} const i=fallback.findIndex(x=>x.id===q.params.id); if(i<0)return s.status(404).json({message:'Product not found'}); fallback[i]=p; s.json({product:p})}catch(e){n(e)}});
+r.delete('/products/:id',async(q,s,n)=>{try{if(connected()){await Product.deleteOne({id:q.params.id})}else{const i=fallback.findIndex(x=>x.id===q.params.id);if(i>=0)fallback.splice(i,1)}s.json({ok:true})}catch(e){n(e)}});
+export default r;

@@ -1,0 +1,1 @@
+import{Router}from'express';import{getWeather}from'../services/weather.js';const r=Router();r.get('/',async(q,s)=>{try{s.json({weather:await getWeather(q.query.city)})}catch(e){s.status(400).json({message:e.message})}});export default r;

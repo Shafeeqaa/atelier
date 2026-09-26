@@ -8,3 +8,118 @@
 
 /* Admin + AI stylist */
 .adminPage{padding-top:56px;padding-bottom:90px}.adminHero{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--line,#ddd);padding-bottom:28px;margin-bottom:24px}.adminHero h1{margin:4px 0 8px}.adminStats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}.adminStats div{border:1px solid var(--line,#ddd);padding:20px;background:#fff}.adminStats b{display:block;font-size:28px}.adminStats span{opacity:.65}.adminEditor,.adminTable{border:1px solid var(--line,#ddd);padding:24px;background:#fff;margin-bottom:24px}.adminTitle{display:flex;justify-content:space-between;align-items:center}.adminForm{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}.adminForm label{display:grid;gap:7px;text-transform:uppercase;font-size:11px;letter-spacing:.08em}.adminForm input{padding:12px;border:1px solid var(--line,#ddd);font:inherit;text-transform:none}.adminForm label:last-child{grid-column:1/-1}.adminMessage{margin-top:12px}.adminRow{display:grid;grid-template-columns:60px 1fr auto auto;gap:14px;align-items:center;border-top:1px solid var(--line,#ddd);padding:12px 0}.adminRow img{width:60px;height:72px;object-fit:cover}.adminRow span{display:block;opacity:.65;margin-top:4px}.danger{border:0;background:#f4e8e8;padding:9px;cursor:pointer}.ghost{border:1px solid var(--line,#ddd);background:#fff;padding:9px 12px;display:inline-flex;gap:7px;align-items:center;cursor:pointer}.aiChat{margin-top:28px;padding:26px;border:1px solid var(--line,#ddd);background:#fff}.aiChat h2{margin:4px 0}.chatInput{display:flex;gap:8px;margin-top:18px}.chatInput input{flex:1;padding:13px;border:1px solid var(--line,#ddd);font:inherit}.chatReply{display:flex;gap:10px;margin-top:16px;padding:14px;background:#f7f4ef}.@media(max-width:700px){.adminStats,.adminForm{grid-template-columns:1fr}.adminRow{grid-template-columns:48px 1fr auto}.adminRow .danger{grid-column:3}.chatInput{flex-direction:column}}
+
+/* ATELIER Collections — editorial cards */
+.collectionsPage .collectionGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.collectionsPage .collection{
+  position:relative;
+  height:390px;
+  min-height:0;
+  padding:0;
+  overflow:hidden;
+  display:block;
+  background:#302f2b;
+  color:#fff;
+}
+
+.collectionsPage .collectionImage{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+.collectionsPage .collectionImage img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  transition:transform .6s ease;
+}
+
+.collectionsPage .collection:hover .collectionImage img{
+  transform:scale(1.035);
+}
+
+.collectionsPage .collectionOverlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(20,19,17,.82) 0%,
+    rgba(20,19,17,.28) 48%,
+    rgba(20,19,17,.02) 100%
+  );
+}
+
+.collectionsPage .collectionContent{
+  position:absolute;
+  left:28px;
+  right:28px;
+  bottom:26px;
+  z-index:2;
+}
+
+.collectionsPage .collectionContent .eyebrow{
+  color:rgba(255,255,255,.72);
+  margin:0 0 8px;
+}
+
+.collectionsPage .collectionContent h2{
+  font-family:'Playfair Display',serif;
+  font-size:38px;
+  line-height:1;
+  font-weight:500;
+  margin:0 0 10px;
+}
+
+.collectionsPage .collectionContent p:not(.eyebrow){
+  color:rgba(255,255,255,.84);
+  font-size:11px;
+  line-height:1.6;
+  max-width:430px;
+  margin:0 0 17px;
+}
+
+.collectionsPage .collectionLink{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1.4px;
+  border-bottom:1px solid rgba(255,255,255,.7);
+  padding-bottom:5px;
+}
+
+.collectionsPage .collectionLink svg{
+  transition:transform .25s ease;
+}
+
+.collectionsPage .collection:hover .collectionLink svg{
+  transform:translateX(4px);
+}
+
+@media(max-width:680px){
+  .collectionsPage .collectionGrid{
+    grid-template-columns:1fr;
+  }
+
+  .collectionsPage .collection{
+    height:330px;
+  }
+
+  .collectionsPage .collectionContent{
+    left:22px;
+    right:22px;
+    bottom:22px;
+  }
+
+  .collectionsPage .collectionContent h2{
+    font-size:32px;
+  }
+}
